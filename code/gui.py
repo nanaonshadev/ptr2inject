@@ -5,6 +5,7 @@
 #
 
 import wx
+from archive import Archive
 
 # begin wxGlade: dependencies
 # end wxGlade
@@ -12,6 +13,8 @@ import wx
 # begin wxGlade: extracode
 # end wxGlade
 
+CurrentImage = None
+CurrentModFile = None
 
 class MyFrame(wx.Frame):
 	def __init__(self, *args, **kwds):
@@ -78,8 +81,7 @@ class MyFrame(wx.Frame):
 		event.Skip()
 
 	def about_menu(self, event):  # wxGlade: MyFrame.<event_handler>
-		print("Event handler 'about_menu' not implemented!")
-		event.Skip()
+		print("Unfinished")
 
 	def ignore_mod_region(self, event):  # wxGlade: MyFrame.<event_handler>
 		print("Event handler 'ignore_mod_region' not implemented!")
@@ -88,10 +90,13 @@ class MyFrame(wx.Frame):
 	def choose_image_event(self, event):  # wxGlade: MyFrame.<event_handler>
 		iso_dialog = wx.FileDialog(self, "Open", "", "", "PTR2 ISO images (*.iso)|*.iso", wx.FD_OPEN | wx.FD_FILE_MUST_EXIST)
 		iso_dialog.ShowModal()
-        
+        print(iso_dialog.GetPath())
+
 	def choose_file_event(self, event):  # wxGlade: MyFrame.<event_handler>
 		file_dialog = wx.FileDialog(self, "Open", "", "", "PTR2 mod files (*.p2m)|*.p2m", wx.FD_OPEN | wx.FD_FILE_MUST_EXIST)
 		file_dialog.ShowModal()
+        print(file_dialog.GetPath())
+
         
 	def start_event(self, event):  # wxGlade: MyFrame.<event_handler>
 		print("Event handler 'start_event' not implemented!")
