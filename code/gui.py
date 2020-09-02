@@ -10,7 +10,6 @@ import wx
 # end wxGlade
 
 # begin wxGlade: extracode
-import rootcode
 # end wxGlade
 
 
@@ -87,11 +86,13 @@ class MyFrame(wx.Frame):
 		event.Skip()
 
 	def choose_image_event(self, event):  # wxGlade: MyFrame.<event_handler>
-		print("hello")
+		a = wx.FileDialog(self, "Save XYZ file", wildcard="XYZ files (*.xyz)|*.xyz",
+                       style=wx.FD_SAVE | wx.FD_OVERWRITE_PROMPT)
         
 	def choose_file_event(self, event):  # wxGlade: MyFrame.<event_handler>
 		print("Event handler 'choose_file_event' not implemented!")
 		event.Skip()
+        
 	def start_event(self, event):  # wxGlade: MyFrame.<event_handler>
 		print("Event handler 'start_event' not implemented!")
 		event.Skip()
