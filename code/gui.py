@@ -86,12 +86,12 @@ class MyFrame(wx.Frame):
 		event.Skip()
 
 	def choose_image_event(self, event):  # wxGlade: MyFrame.<event_handler>
-		a = wx.FileDialog(self, "Save XYZ file", wildcard="XYZ files (*.xyz)|*.xyz",
-                       style=wx.FD_SAVE | wx.FD_OVERWRITE_PROMPT)
+		iso_dialog = wx.FileDialog(self, "Open", "", "", "PTR2 ISO images (*.iso)|*.iso", wx.FD_OPEN | wx.FD_FILE_MUST_EXIST)
+		iso_dialog.ShowModal()
         
 	def choose_file_event(self, event):  # wxGlade: MyFrame.<event_handler>
-		print("Event handler 'choose_file_event' not implemented!")
-		event.Skip()
+		file_dialog = wx.FileDialog(self, "Open", "", "", "PTR2 mod files (*.p2m)|*.p2m", wx.FD_OPEN | wx.FD_FILE_MUST_EXIST)
+		file_dialog.ShowModal()
         
 	def start_event(self, event):  # wxGlade: MyFrame.<event_handler>
 		print("Event handler 'start_event' not implemented!")
