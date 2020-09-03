@@ -14,7 +14,7 @@ def remove_temporary_directory():
 
 def clear_temporary_directory():
     global temp_directory
-    shutil.rmtree(temp_directory)
+    shutil.rmtree(temp_directory, ignore_errors=True)
     os.mkdir(temp_directory)
 
 def unpackage_mod_file(mod_file, name):

@@ -147,7 +147,16 @@ class MyFrame(wx.Frame):
             show_package_data(self, CurrentModPackage)
 
     def clear_temporary_files(self, event):
-        print("test")
+        begin_time = time.perf_counter()
+        rootcode.clear_temporary_directory()
+        end_time = time.perf_counter()
+        clear_temporary_files_dialog = wx.MessageDialog(self,
+                                           "Finished in " + str(math.ceil(end_time - begin_time)) +
+                                           " seconds. Thank you!",
+                                           "Done",
+                                           wx.OK | wx.STAY_ON_TOP | wx.CENTRE)
+        clear_temporary_files_dialog.ShowModal()
+        clear_temporary_files_dialog.Destroy()
 
     def about_menu(self, event):  # wxGlade: MyFrame.<event_handler>
         not_yet_implemented(self)
