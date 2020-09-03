@@ -6,6 +6,11 @@
 
 import wx
 import shutil 
+import os
+import time
+import math
+import json
+
 
 
 # begin wxGlade: dependencies
@@ -17,12 +22,29 @@ import shutil
 CurrentImage = None
 CurrentModFile = None
 
+ImageReady = False
+ModFileReady = False
+
+temp_directory = None
+temp_directory_name = ".temporary"
+temp_directory_path = "\\" + temp_directory_name + "\\"
+temp_directory_fullpath = os.getcwd() + temp_directory_path
+
+if not os.path.isdir(temp_directory_fullpath):
+    os.makedirs(temp_directory_fullpath)
+
+temp_directory = temp_directory_fullpath
+
+
 def check_start_enabled(thisobject):
+    print("Image Ready: " + str(ImageReady))
+    print("ModFile Ready: " + str(ModFileReady))
+    
     startbutton = thisobject.GetParent().Start
-    if CurrentImage == None and CurrentModFile == None:
-        startbutton.Disable()
-    else:
+    if ImageReady == True and ModFileReady == True:
         startbutton.Enable()
+    else:
+        startbutton.Disable()
 
 class MyFrame(wx.Frame):
     def __init__(self, *args, **kwds):
@@ -100,6 +122,9 @@ class MyFrame(wx.Frame):
         event.Skip()
 
     def choose_image_event(self, event):  # wxGlade: MyFrame.<event_handler>
+        global CurrentImage
+        global ImageReady
+        
         iso_dialog = wx.FileDialog(self, "Open", "", "", "PS2 ISO images (*.iso)|*.iso", wx.FD_OPEN | wx.FD_FILE_MUST_EXIST)
         iso_dialog.ShowModal()
         CurrentImage = iso_dialog.GetPath()
@@ -109,9 +134,12 @@ class MyFrame(wx.Frame):
         myobject = event.GetEventObject()
         myobject.Disable()
         myobject.SetLabel("Completed")
+        ImageReady = True
         check_start_enabled(myobject)
-        
     def choose_file_event(self, event):  # wxGlade: MyFrame.<event_handler>
+        global CurrentModFile
+        global ModFileReady
+        
         file_dialog = wx.FileDialog(self, "Open", "", "", "PTR2 mod files (*.p2m)|*.p2m", wx.FD_OPEN | wx.FD_FILE_MUST_EXIST)
         file_dialog.ShowModal()
         CurrentModFile = file_dialog.GetPath()
@@ -121,16 +149,43 @@ class MyFrame(wx.Frame):
         myobject = event.GetEventObject()
         myobject.Disable()
         myobject.SetLabel("Completed")
-        shutil.unpack_archive(CurrentModFile, "C:\\test\\", "zip")
+        ModFileReady = True
         check_start_enabled(myobject)
         
     def start_event(self, event):  # wxGlade: MyFrame.<event_handler>
-        print("Event handler 'start_event' not implemented!")
-        event.Skip()
-        
+        global CurrentModFile
+        start_button = event.GetEventObject()
+        start_button.Disable()
+        start_button.SetLabel("Extracting...")
+        begin_time = time.perf_counter()
+        shutil.unpack_archive(CurrentModFile, temp_directory, "zip")
+        mod_data = temp_directory + "data.json"
+        mod_posdata = temp_directory + "positions.json"
+        mod_files = temp_directory + "files\\"
+
+        with open(mod_data, 'r') as mod_data_file:
+            mod_data_json_u = mod_data_file.read()
+
+        with open(mod_posdata, 'r') as mod_posdata_file:
+            mod_posdata_json_u = mod_posdata_file.read()
+
+        mod_data_json = json.loads(mod_data_json_u)
+        mod_posdata_json = json.loads(mod_posdata_json_u)
+
+        print("Mod Name: " + mod_data_json['name'])
+        print("Mod Description: " + mod_data_json['description'])
+        print("Mod Version: " + str(mod_data_json['version']))
+
+        end_time = time.perf_counter()
+        dial = wx.MessageDialog(self,
+                                "Finished in " + str(math.ceil(end_time - begin_time)) + " seconds. Thank you!",
+                                "Done",
+                                wx.OK | wx.STAY_ON_TOP | wx.CENTRE)
+        dial.ShowModal()
+
 # end of class MyFrame
 
-class MyDialog(wx.Dialog):
+class AboutDialog(wx.Dialog):
     def __init__(self, *args, **kwds):
         # begin wxGlade: MyDialog.__init__
         kwds["style"] = kwds.get("style", 0) | wx.CAPTION | wx.CLOSE_BOX
