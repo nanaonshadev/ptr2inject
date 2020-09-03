@@ -20,13 +20,14 @@ import rootcode
 # begin wxGlade: extracode
 # end wxGlade
 
-CurrentImage = None
-CurrentModFile = None
+CurrentImage        = None
+CurrentModFile      = None
+CurrentModPackage   = None
 
-ImageReady = False
-ModFileReady = False
+ImageReady          = False
+ModFileReady        = False
 
-temp_directory = None
+temp_directory      = None
 temp_directory_name = ".temporary"
 temp_directory_path = "\\" + temp_directory_name + "\\"
 temp_directory_fullpath = os.getcwd() + temp_directory_path
@@ -55,7 +56,7 @@ def not_yet_implemented(self):
     mod_data_dialog.ShowModal()
     mod_data_dialog.Destroy()
 
-def show_package_data(mod_package):
+def show_package_data(self, mod_package):
     mod_data_dialog = wx.MessageDialog(self,
                                        "Mod Name: " + mod_package['mod_data_json']['name'] +
                                        "\nMod Description: " + mod_package['mod_data_json']['description'] +
@@ -130,7 +131,16 @@ class MyFrame(wx.Frame):
         not_yet_implemented(self)
 
     def view_mod_info(self, event):  # wxGlade: MyFrame.<event_handler>
-        not_yet_implemented(self)
+        if ModFileReady == False:
+            view_mod_error_dialog = wx.MessageDialog(self,
+                                                        "Please select a mod file before using this option.",
+                                                        "Info",
+                                                        wx.OK | wx.STAY_ON_TOP | wx.CENTRE)
+            view_mod_error_dialog.ShowModal()
+            view_mod_error_dialog.Destroy()
+        else:
+            show_package_data(self, CurrentModFile)
+
 
     def about_menu(self, event):  # wxGlade: MyFrame.<event_handler>
         not_yet_implemented(self)
