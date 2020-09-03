@@ -10,6 +10,7 @@ import os
 import time
 import math
 import json
+import rootcode
 
 
 
@@ -176,12 +177,21 @@ class MyFrame(wx.Frame):
         print("Mod Description: " + mod_data_json['description'])
         print("Mod Version: " + str(mod_data_json['version']))
 
+        mod_data_dialog = wx.MessageDialog(self,
+                                "Mod Name: " + mod_data_json['name'] +
+                                "\nMod Description: " + mod_data_json['description'] +
+                                "\nMod Version: " + str(mod_data_json['version']),
+
+                                "Mod Info",
+                                wx.OK | wx.STAY_ON_TOP | wx.CENTRE)
+        mod_data_dialog.ShowModal()
+
         end_time = time.perf_counter()
-        dial = wx.MessageDialog(self,
+        finished_dialog = wx.MessageDialog(self,
                                 "Finished in " + str(math.ceil(end_time - begin_time)) + " seconds. Thank you!",
                                 "Done",
                                 wx.OK | wx.STAY_ON_TOP | wx.CENTRE)
-        dial.ShowModal()
+        finished_dialog.ShowModal()
 
 # end of class MyFrame
 
