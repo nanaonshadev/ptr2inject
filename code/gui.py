@@ -34,7 +34,7 @@ temp_directory_fullpath = os.getcwd() + temp_directory_path
 if not os.path.isdir(temp_directory_fullpath):
     os.makedirs(temp_directory_fullpath)
 
-temp_directory = temp_directory_fullpath
+rootcode.set_temporary_directory(temp_directory_fullpath)
 
 
 def check_start_enabled(thisobject):
