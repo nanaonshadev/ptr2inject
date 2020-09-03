@@ -159,23 +159,7 @@ class MyFrame(wx.Frame):
         start_button.Disable()
         start_button.SetLabel("Extracting...")
         begin_time = time.perf_counter()
-        shutil.unpack_archive(CurrentModFile, temp_directory, "zip")
-        mod_data = temp_directory + "data.json"
-        mod_posdata = temp_directory + "positions.json"
-        mod_files = temp_directory + "files\\"
-
-        with open(mod_data, 'r') as mod_data_file:
-            mod_data_json_u = mod_data_file.read()
-
-        with open(mod_posdata, 'r') as mod_posdata_file:
-            mod_posdata_json_u = mod_posdata_file.read()
-
-        mod_data_json = json.loads(mod_data_json_u)
-        mod_posdata_json = json.loads(mod_posdata_json_u)
-
-        print("Mod Name: " + mod_data_json['name'])
-        print("Mod Description: " + mod_data_json['description'])
-        print("Mod Version: " + str(mod_data_json['version']))
+        mod_package = rootcode.unpackage_mod_file(CurrentModFile, "ptr2mod")
 
         mod_data_dialog = wx.MessageDialog(self,
                                 "Mod Name: " + mod_data_json['name'] +
