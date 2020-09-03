@@ -1,6 +1,7 @@
 import shutil
 import os
 import json
+import time
 
 temp_directory = None
 
@@ -15,7 +16,11 @@ def remove_temporary_directory():
 def clear_temporary_directory():
     global temp_directory
     shutil.rmtree(temp_directory, ignore_errors=True)
-    os.mkdir(temp_directory)
+    try:
+        os.mkdir(temp_directory)
+    except:
+        pass
+
 
 def unpackage_mod_file(mod_file, name):
     mod_package = {}
