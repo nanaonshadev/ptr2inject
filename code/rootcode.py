@@ -14,7 +14,7 @@ def clear_temporary_directory():
     shutil.rmtree(temp_directory)
     os.mkdir(temp_directory)
 
-def package_mod_file(mod_file, name):
+def unpackage_mod_file(mod_file, name):
     mod_package = {}
 
     mod_package["mod_package_location"] = temp_directory + name + "\\"
@@ -33,9 +33,6 @@ def package_mod_file(mod_file, name):
 
     mod_package["mod_data_json"] = json.loads(mod_data_json_u)
     mod_package["mod_posdata_json"] = json.loads(mod_posdata_json_u)
-
-    def destroy_mod_package():
-        shutil.rmtree(mod_package["mod_package_location"])
 
     mod_package["destroy_mod_package"] = destroy_mod_package
 
