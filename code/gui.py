@@ -47,6 +47,14 @@ def check_start_enabled(thisobject):
     else:
         startbutton.Disable()
 
+def not_yet_implemented(self):
+    mod_data_dialog = wx.MessageDialog(self,
+                                       "This feature is not yet implemented.",
+                                       "Info",
+                                       wx.OK | wx.STAY_ON_TOP | wx.CENTRE)
+    mod_data_dialog.ShowModal()
+    mod_data_dialog.Destroy()
+
 class MyFrame(wx.Frame):
     def __init__(self, *args, **kwds):
         # begin wxGlade: MyFrame.__init__
@@ -108,19 +116,16 @@ class MyFrame(wx.Frame):
 
 
     def create_mod_file(self, event):  # wxGlade: MyFrame.<event_handler>
-        print("Event handler 'create_mod_file' not implemented!")
-        event.Skip()
+        not_yet_implemented(self)
 
     def view_mod_info(self, event):  # wxGlade: MyFrame.<event_handler>
-        print("Event handler 'view_mod_info' not implemented!")
-        event.Skip()
+        not_yet_implemented(self)
 
     def about_menu(self, event):  # wxGlade: MyFrame.<event_handler>
-        print("Unfinished")
+        not_yet_implemented(self)
 
     def ignore_mod_region(self, event):  # wxGlade: MyFrame.<event_handler>
-        print("Event handler 'ignore_mod_region' not implemented!")
-        event.Skip()
+        not_yet_implemented(self)
 
     def choose_image_event(self, event):  # wxGlade: MyFrame.<event_handler>
         global CurrentImage
