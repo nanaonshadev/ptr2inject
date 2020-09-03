@@ -75,12 +75,19 @@ class MyFrame(wx.Frame):
         # Menu Bar
         self.MenuBar = wx.MenuBar()
         wxglade_tmp_menu = wx.Menu()
+
         item = wxglade_tmp_menu.Append(wx.ID_ANY, "Create Mod File from INT", "Create a mod file from INT files.")
         self.Bind(wx.EVT_MENU, self.create_mod_file, id=item.GetId())
+
         item = wxglade_tmp_menu.Append(wx.ID_ANY, "View Mod Info", "View a mod file's info.")
         self.Bind(wx.EVT_MENU, self.view_mod_info, id=item.GetId())
+
         item = wxglade_tmp_menu.Append(wx.ID_ANY, "About", "Info about this program")
         self.Bind(wx.EVT_MENU, self.about_menu, id=item.GetId())
+
+        item = wxglade_tmp_menu.Append(wx.ID_ANY, "Clear Temporary Files", "Clear all temporary files.")
+        self.Bind(wx.EVT_MENU, self.clear_temporary_files, id=item.GetId())
+
         self.MenuBar.Append(wxglade_tmp_menu, "File")
         wxglade_tmp_menu = wx.Menu()
         item = wxglade_tmp_menu.Append(wx.ID_ANY, "Ignore ISO/Mod Region", "Automatically, this program detects when mods are incompatible with the ISO you give them, based on region.", wx.ITEM_CHECK)
@@ -137,8 +144,10 @@ class MyFrame(wx.Frame):
             view_mod_error_dialog.ShowModal()
             view_mod_error_dialog.Destroy()
         else:
-            show_package_data(self, CurrentModFile)
+            show_package_data(self, CurrentModPackage)
 
+    def clear_temporary_files(self, event):
+        print("test")
 
     def about_menu(self, event):  # wxGlade: MyFrame.<event_handler>
         not_yet_implemented(self)
@@ -164,29 +173,34 @@ class MyFrame(wx.Frame):
 
     def choose_file_event(self, event):  # wxGlade: MyFrame.<event_handler>
         global CurrentModFile
+        global CurrentModPackage
         global ModFileReady
         
         file_dialog = wx.FileDialog(self, "Open", "", "", "PTR2 mod files (*.p2m)|*.p2m", wx.FD_OPEN | wx.FD_FILE_MUST_EXIST)
         file_dialog.ShowModal()
         CurrentModFile = file_dialog.GetPath()
+
         if not CurrentModFile or CurrentModFile == "":
             CurrentModFile = None
             return
+        CurrentModPackage = rootcode.unpackage_mod_file(CurrentModFile, "ptr2mod")
+
         myobject = event.GetEventObject()
         myobject.Disable()
         myobject.SetLabel("Completed")
         ModFileReady = True
         check_start_enabled(myobject)
-        
+
     def start_event(self, event):  # wxGlade: MyFrame.<event_handler>
         global CurrentModFile
+        global CurrentModPackage
+
         start_button = event.GetEventObject()
         start_button.Disable()
         start_button.SetLabel("Extracting...")
-        mod_package = rootcode.unpackage_mod_file(CurrentModFile, "ptr2mod")
         begin_time = time.perf_counter()
 
-        show_package_data(mod_package)
+        show_package_data(self, CurrentModPackage)
         end_time = time.perf_counter()
         finished_dialog = wx.MessageDialog(self,
                                             "Finished in " + str(math.ceil(end_time - begin_time)) +
