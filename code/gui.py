@@ -55,6 +55,17 @@ def not_yet_implemented(self):
     mod_data_dialog.ShowModal()
     mod_data_dialog.Destroy()
 
+def show_package_data(mod_package):
+    mod_data_dialog = wx.MessageDialog(self,
+                                       "Mod Name: " + mod_package['mod_data_json']['name'] +
+                                       "\nMod Description: " + mod_package['mod_data_json']['description'] +
+                                       "\nMod Version: " + str(mod_package['mod_data_json']['version']),
+
+                                       "Mod Info",
+                                       wx.OK | wx.STAY_ON_TOP | wx.CENTRE)
+    mod_data_dialog.ShowModal()
+    mod_data_dialog.Destroy()
+
 class MyFrame(wx.Frame):
     def __init__(self, *args, **kwds):
         # begin wxGlade: MyFrame.__init__
@@ -142,6 +153,7 @@ class MyFrame(wx.Frame):
         myobject.SetLabel("Completed")
         ImageReady = True
         check_start_enabled(myobject)
+
     def choose_file_event(self, event):  # wxGlade: MyFrame.<event_handler>
         global CurrentModFile
         global ModFileReady
@@ -163,25 +175,18 @@ class MyFrame(wx.Frame):
         start_button = event.GetEventObject()
         start_button.Disable()
         start_button.SetLabel("Extracting...")
-        begin_time = time.perf_counter()
         mod_package = rootcode.unpackage_mod_file(CurrentModFile, "ptr2mod")
+        begin_time = time.perf_counter()
 
-        mod_data_dialog = wx.MessageDialog(self,
-                                "Mod Name: " + mod_data_json['name'] +
-                                "\nMod Description: " + mod_data_json['description'] +
-                                "\nMod Version: " + str(mod_data_json['version']),
-
-                                "Mod Info",
-                                wx.OK | wx.STAY_ON_TOP | wx.CENTRE)
-        mod_data_dialog.ShowModal()
-
+        show_package_data(mod_package)
         end_time = time.perf_counter()
         finished_dialog = wx.MessageDialog(self,
-                                "Finished in " + str(math.ceil(end_time - begin_time)) + " seconds. Thank you!",
-                                "Done",
-                                wx.OK | wx.STAY_ON_TOP | wx.CENTRE)
+                                            "Finished in " + str(math.ceil(end_time - begin_time)) +
+                                            " seconds. Thank you!",
+                                            "Done",
+                                            wx.OK | wx.STAY_ON_TOP | wx.CENTRE)
         finished_dialog.ShowModal()
-
+        finished_dialog.Destroy()
 # end of class MyFrame
 
 class AboutDialog(wx.Dialog):
