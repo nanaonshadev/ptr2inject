@@ -12,8 +12,6 @@ import math
 import json
 import rootcode
 
-
-
 # begin wxGlade: dependencies
 # end wxGlade
 
