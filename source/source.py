@@ -19,12 +19,6 @@ import json
 
 import modmanager
 
-# begin wxGlade: dependencies
-# end wxGlade
-
-# begin wxGlade: extracode
-# end wxGlade
-
 CurrentImage        = None
 CurrentModFile      = None
 
