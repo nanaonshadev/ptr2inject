@@ -115,7 +115,7 @@ class MyFrame(wx.Frame):
         self.ChooseImage.SetFont(wx.Font(12, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, 0, "Segoe UI"))
         self.ChooseImage.SetToolTip("This button chooses your Parappa The Rapper 2 ISO image.")
         self.ChooseFile.SetFont(wx.Font(12, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, 0, "Segoe UI"))
-        self.ChooseFile.SetToolTip("This button selects the .PTR2MOD file you want to inject.")
+        self.ChooseFile.SetToolTip("This button selects the .p2m file you want to inject.")
         self.Start.SetFont(wx.Font(12, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, 0, "Segoe UI"))
         self.Start.SetToolTip("This button begins the ISO injection. Once you click this, you will be asked where to save the newly created ISO.")
         # end wxGlade
