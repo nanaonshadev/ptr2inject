@@ -122,4 +122,22 @@ def unpackage_iso(iso_path, name, path_type="auto", start_path="/"):
                 iso.get_file_from_iso(os.path.join(extract_to, relname), **{pathname: ident_to_here})
 
     iso.close()
-    return 0
+    return extract_to
+
+def package_iso(unpacked_iso_path):
+    iso = pycdlib.PyCdlib()
+    iso.new()
+    for entry in os.scandir(unpacked_iso_path):
+        if os.path.isdir(entry.path):
+            print("adding directory: " + entry.name)
+            iso.add_directory("/" + entry.name.upper())
+
+    for entry in os.scandir(unpacked_iso_path):
+        if os.path.isfile(entry.path):
+            location = os.path.relpath(entry.path, unpacked_iso_path)
+            print("adding file: " + entry.name + " path " + location)
+            iso.add_file(entry.name.upper(), location)
+
+        print(entry.name)
+    iso.write("final.iso")
+    iso.close()
