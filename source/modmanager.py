@@ -5,13 +5,16 @@ import time
 
 temp_directory = None
 
+
 def set_temporary_directory(location):
     global temp_directory
     temp_directory = location
 
+
 def remove_temporary_directory():
     global temp_directory
     shutil.rmtree(temp_directory)
+
 
 def clear_temporary_directory():
     global temp_directory
@@ -23,9 +26,7 @@ def clear_temporary_directory():
 
 
 def unpackage_mod_file(mod_file, name):
-    mod_package = {}
-
-    mod_package["mod_package_location"] = temp_directory + name + "\\"
+    mod_package = {"mod_package_location": temp_directory + name + "\\"}
 
     shutil.unpack_archive(mod_file, mod_package["mod_package_location"], "zip")
 

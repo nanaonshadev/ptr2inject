@@ -10,7 +10,7 @@ import os
 import time
 import math
 import json
-import rootcode
+import modmanager
 
 # begin wxGlade: dependencies
 # end wxGlade
@@ -33,7 +33,7 @@ temp_directory_fullpath = os.getcwd() + temp_directory_path
 if not os.path.isdir(temp_directory_fullpath):
     os.makedirs(temp_directory_fullpath)
 
-rootcode.set_temporary_directory(temp_directory_fullpath)
+modmanager.set_temporary_directory(temp_directory_fullpath)
 
 
 def check_start_enabled(thisobject):
@@ -148,7 +148,7 @@ class MyFrame(wx.Frame):
 
     def clear_temporary_files(self, event):
         begin_time = time.perf_counter()
-        rootcode.clear_temporary_directory()
+        modmanager.clear_temporary_directory()
         end_time = time.perf_counter()
         clear_temporary_files_dialog = wx.MessageDialog(self,
                                            "Finished in " + str(math.ceil(end_time - begin_time)) +
@@ -192,7 +192,7 @@ class MyFrame(wx.Frame):
         if not CurrentModFile or CurrentModFile == "":
             CurrentModFile = None
             return
-        CurrentModPackage = rootcode.unpackage_mod_file(CurrentModFile, "ptr2mod")
+        CurrentModPackage = modmanager.unpackage_mod_file(CurrentModFile, "ptr2mod")
 
         myobject = event.GetEventObject()
         myobject.Disable()
