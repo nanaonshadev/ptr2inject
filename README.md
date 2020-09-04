@@ -12,3 +12,5 @@ Technically this works on any ISO image but I made it for Parappa.
 3. Press "Begin"
 4. Wait for the process to finish
 5. Profit
+
+[Join the PTR2 Modding Discord](https://discord.gg/xpvVnYd)

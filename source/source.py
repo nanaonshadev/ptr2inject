@@ -217,7 +217,8 @@ class MyFrame(wx.Frame):
 
         start_button.SetLabel("Extracting ISO...")
         modmanager.unpackage_iso(CurrentImage, "ptr2iso")
-
+        start_button.SetLabel("Moving files...")
+        
         end_time = time.perf_counter()
         finished_dialog = wx.MessageDialog(self,
                                             "Finished in " + str(math.ceil(end_time - begin_time)) +
