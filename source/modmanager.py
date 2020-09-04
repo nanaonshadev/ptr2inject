@@ -120,24 +120,33 @@ def unpackage_iso(iso_path, name, path_type="auto", start_path="/"):
                 os.chdir(old_dir)
             else:
                 iso.get_file_from_iso(os.path.join(extract_to, relname), **{pathname: ident_to_here})
-
+    iso.write()
     iso.close()
     return extract_to
 
-def package_iso(unpacked_iso_path):
+'''
+def package_iso(unpacked_iso_path, previous_iso=None):
     iso = pycdlib.PyCdlib()
-    iso.new()
+    if previous_iso:
+        iso.open(previous_iso)
+    else:
+        iso.new()
+
     for entry in os.scandir(unpacked_iso_path):
         if os.path.isdir(entry.path):
-            print("adding directory: " + entry.name)
-            iso.add_directory("/" + entry.name.upper())
+            try:
+                print("adding directory: " + entry.name)
+                iso.add_directory("/" + entry.name.upper())
+            except:
+                pass
 
     for entry in os.scandir(unpacked_iso_path):
         if os.path.isfile(entry.path):
             location = os.path.relpath(entry.path, unpacked_iso_path)
             print("adding file: " + entry.name + " path " + location)
-            iso.add_file(entry.name.upper(), location)
+            iso.add_file(entry.path, location)
 
         print(entry.name)
     iso.write("final.iso")
     iso.close()
+'''

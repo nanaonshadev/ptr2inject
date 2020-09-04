@@ -83,14 +83,15 @@ class MyFrame(wx.Frame):
         item = wxglade_tmp_menu.Append(wx.ID_ANY, "View Mod Info", "View a mod file's info.")
         self.Bind(wx.EVT_MENU, self.view_mod_info, id=item.GetId())
 
-        item = wxglade_tmp_menu.Append(wx.ID_ANY, "About", "Info about this program")
-        self.Bind(wx.EVT_MENU, self.about_menu, id=item.GetId())
-
         item = wxglade_tmp_menu.Append(wx.ID_ANY, "Clear Temporary Files", "Clear all temporary files.")
         self.Bind(wx.EVT_MENU, self.clear_temporary_files, id=item.GetId())
 
+        item = wxglade_tmp_menu.Append(wx.ID_ANY, "About", "Info about this program")
+        self.Bind(wx.EVT_MENU, self.about_menu, id=item.GetId())
+
         self.MenuBar.Append(wxglade_tmp_menu, "File")
         wxglade_tmp_menu = wx.Menu()
+        
         item = wxglade_tmp_menu.Append(wx.ID_ANY, "Ignore ISO/Mod Region", "Automatically, this program detects when mods are incompatible with the ISO you give them, based on region.", wx.ITEM_CHECK)
         self.Bind(wx.EVT_MENU, self.ignore_mod_region, id=item.GetId())
         self.MenuBar.Append(wxglade_tmp_menu, "Settings")
@@ -210,6 +211,7 @@ class MyFrame(wx.Frame):
         start_button = event.GetEventObject()
         start_button.Disable()
         start_button.SetLabel("Starting...")
+        wx.BeginBusyCursor()
         show_package_data(self, CurrentModPackage)
         begin_time = time.perf_counter()
         start_button.SetLabel("Cleaning up...")
@@ -219,9 +221,10 @@ class MyFrame(wx.Frame):
         unpackaged_iso = modmanager.unpackage_iso(CurrentImage, "ptr2iso")
         start_button.SetLabel("Moving files...")
         start_button.SetLabel("Patching ISO...")
-        modmanager.package_iso(unpackaged_iso)
+        modmanager.package_iso(unpackaged_iso, CurrentImage)
 
         end_time = time.perf_counter()
+        wx.EndBusyCursor()
         finished_dialog = wx.MessageDialog(self,
                                             "Finished in " + str(math.ceil(end_time - begin_time)) +
                                             " seconds. Thank you!",
