@@ -15,16 +15,41 @@ temp_directory = None
 
 
 def set_temporary_directory(location):
+    """
+
+    Sets the temporary directory to use for this mod manager instance.
+
+    :param location: A file path to set the temporary directory to.
+    :return: Nothing
+
+    """
+
     global temp_directory
     temp_directory = location
 
 
 def remove_temporary_directory():
+    """
+
+    Deletes the temporary directory and all of its contents.
+
+    :return: Nothing
+
+    """
+
     global temp_directory
     shutil.rmtree(temp_directory)
 
 
 def clear_temporary_directory():
+    """
+
+    Clears the contents of the temporary directory.
+
+    :return: Nothing
+
+    """
+
     global temp_directory
     shutil.rmtree(temp_directory, ignore_errors=True)
     try:
@@ -34,6 +59,18 @@ def clear_temporary_directory():
 
 
 def unpackage_mod_file(mod_file, name):
+    """
+
+    Unpackages a mod file into the current temporary directory,
+    and parses its contents.
+
+    :param mod_file: The path to a mod file.
+    :param name: The name of the folder to extract the mod into. This folder will be created as a subdirectory in the active temporary folder.
+
+    :return: A dictionary containing this mod's data.
+
+    """
+
     mod_package = {"mod_package_location": temp_directory + name + "\\"}
 
     shutil.unpack_archive(mod_file, mod_package["mod_package_location"], "zip")
@@ -55,6 +92,18 @@ def unpackage_mod_file(mod_file, name):
 
 
 def unpackage_iso(iso_path, name, path_type="auto", start_path="/"):
+    """
+
+    Unpackages an ISO file into the current temporary directory.
+
+    :param iso_path: The path to an ISO file.
+    :param name: The name of the folder to extract the ISO into. This folder will be created as a subdirectory in the active temporary folder.
+    :param path_type: The type of ISO. Can be auto, iso_path, udf_path, rr_path, or joliet_path.
+    :param start_path: The start path to extract the ISO from. This should almost *always* be set to "/".
+
+    :return: The location to the sub directory the ISO was extracted to.
+
+    """
     extract_to = temp_directory + name + "\\"
     iso = pycdlib.PyCdlib()
     print('Opening %s' % iso_path)
