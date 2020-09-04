@@ -21,6 +21,8 @@ import modmanager
 
 CurrentImage        = None
 CurrentModFile      = None
+
+CurrentImagePackage = None
 CurrentModPackage   = None
 
 ImageReady          = False
@@ -83,6 +85,9 @@ class MyFrame(wx.Frame):
         item = wxglade_tmp_menu.Append(wx.ID_ANY, "View Mod Info", "View a mod file's info.")
         self.Bind(wx.EVT_MENU, self.view_mod_info, id=item.GetId())
 
+        item = wxglade_tmp_menu.Append(wx.ID_ANY, "View ISO Info", "View an ISO file's info.")
+        self.Bind(wx.EVT_MENU, self.view_iso_info, id=item.GetId())
+
         item = wxglade_tmp_menu.Append(wx.ID_ANY, "Clear Temporary Files", "Clear all temporary files.")
         self.Bind(wx.EVT_MENU, self.clear_temporary_files, id=item.GetId())
 
@@ -91,7 +96,7 @@ class MyFrame(wx.Frame):
 
         self.MenuBar.Append(wxglade_tmp_menu, "File")
         wxglade_tmp_menu = wx.Menu()
-        
+
         item = wxglade_tmp_menu.Append(wx.ID_ANY, "Ignore ISO/Mod Region", "Automatically, this program detects when mods are incompatible with the ISO you give them, based on region.", wx.ITEM_CHECK)
         self.Bind(wx.EVT_MENU, self.ignore_mod_region, id=item.GetId())
         self.MenuBar.Append(wxglade_tmp_menu, "Settings")
@@ -147,6 +152,20 @@ class MyFrame(wx.Frame):
             view_mod_error_dialog.Destroy()
         else:
             show_package_data(self, CurrentModPackage)
+
+    def view_iso_info(self, event):
+        not_yet_implemented(self)
+        '''
+        if ImageReady == False:
+            view_iso_error_dialog = wx.MessageDialog(self,
+                                                     "Please select an ISO file before using this option.",
+                                                     "Info",
+                                                     wx.OK | wx.STAY_ON_TOP | wx.CENTRE)
+            view_iso_error_dialog.ShowModal()
+            view_iso_error_dialog.Destroy()
+        else:
+            show_image_data(self, CurrentModPackage)
+        '''
 
     def clear_temporary_files(self, event):
         begin_time = time.perf_counter()
