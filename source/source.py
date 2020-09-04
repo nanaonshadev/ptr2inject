@@ -10,6 +10,8 @@ import os
 import time
 import math
 import json
+
+import isomanager
 import modmanager
 
 # begin wxGlade: dependencies
