@@ -55,6 +55,7 @@ def unpackage_mod_file(mod_file, name):
 
 
 def unpackage_iso(iso_path, name, path_type="auto", start_path="/"):
+    extract_to = temp_directory + name + "\\"
     iso = pycdlib.PyCdlib()
     print('Opening %s' % iso_path)
     iso.open(iso_path)

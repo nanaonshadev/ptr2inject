@@ -159,6 +159,7 @@ class MyFrame(wx.Frame):
         clear_temporary_files_dialog.ShowModal()
         clear_temporary_files_dialog.Destroy()
 
+
     def about_menu(self, event):  # wxGlade: MyFrame.<event_handler>
         not_yet_implemented(self)
 
@@ -204,13 +205,19 @@ class MyFrame(wx.Frame):
     def start_event(self, event):  # wxGlade: MyFrame.<event_handler>
         global CurrentModFile
         global CurrentModPackage
+        global CurrentImage
 
         start_button = event.GetEventObject()
         start_button.Disable()
-        start_button.SetLabel("Extracting...")
-        begin_time = time.perf_counter()
-
+        start_button.SetLabel("Starting...")
         show_package_data(self, CurrentModPackage)
+        begin_time = time.perf_counter()
+        start_button.SetLabel("Cleaning up...")
+        modmanager.clear_temporary_directory()
+
+        start_button.SetLabel("Extracting ISO...")
+        modmanager.unpackage_iso(CurrentImage, "ptr2iso")
+
         end_time = time.perf_counter()
         finished_dialog = wx.MessageDialog(self,
                                             "Finished in " + str(math.ceil(end_time - begin_time)) +
