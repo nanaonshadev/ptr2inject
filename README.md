@@ -2,6 +2,9 @@
 Tool to easily create modified Parappa The Rapper 2 ISO files.
 Technically this works on any ISO image but I made it for Parappa.
 
+# ⚠ No longer maintained
+I'm no longer working on this project. 
+
 # 📚 What you need
 - Parappa The Rapper 2 ISO
 - PTR2 Mod File (.p2m)
