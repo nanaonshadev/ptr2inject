@@ -15,5 +15,3 @@ I'm no longer working on this project.
 3. Press "Begin"
 4. Wait for the process to finish
 5. Profit
-
-[💬 Join the PTR2 Modding Discord](https://discord.gg/xpvVnYd)
